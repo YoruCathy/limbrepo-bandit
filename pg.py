@@ -3,12 +3,12 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 import numpy as np
-from env import MyEnvironment
+from env import MyRCareWorldEnv
 import matplotlib.pyplot as plt
 
 # hyperparameters below, can be tuned
 
-T = 2000
+T = 100
 lr = 3e-3
 
 
@@ -45,16 +45,22 @@ class Critic(nn.Module):
         return self.model(x)
 
 
-if __name__ == "__main__":
 
-    env = MyEnvironment()
+
+
+if __name__ == "__main__":
+    env = MyRCareWorldEnv()
     actor = Actor(env.n_obs, env.n_actions)
     critic = Critic(env.n_obs)
     optimizer = optim.Adam(list(actor.parameters()) + list(critic.parameters()), lr=lr)
 
     reward_list = []
 
+
+
     for t in range(T):
+        # initialize environment
+
 
         observation = env.reset()
         action, log_prob = actor.act(torch.tensor(observation).float())
