@@ -4,6 +4,7 @@ import torch.nn.functional as F
 import torch.optim as optim
 import numpy as np
 from env import MyRCareWorldEnv
+from env import MyEnvironment
 import matplotlib.pyplot as plt
 
 # hyperparameters below, can be tuned
