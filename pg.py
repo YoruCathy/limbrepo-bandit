@@ -59,7 +59,7 @@ class Critic(nn.Module):
 
 
 if __name__ == "__main__":
-    env = MyRCareWorldEnv()
+    env = MyRCareWorldEnv(executable_file="your_path")
 
     reward_list_list = []
 
