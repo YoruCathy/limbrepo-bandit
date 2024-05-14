@@ -63,7 +63,7 @@ class MyRCareWorldEnv(RCareWorld, gym.Env):
             )
         for i in range(10):
             self._step()
-        self.robot.setJointPositionsDirectly([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
+        # self.robot.setJointPositionsDirectly([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
         for i in range(5):
             self._step()
         position = self.target.getPosition()
@@ -86,8 +86,8 @@ class MyRCareWorldEnv(RCareWorld, gym.Env):
         print("Human arm grasped.")
 
         
-        self.obs = torch.tensor([wrist_position])
-        print(self.obs)
+        self.obs = torch.tensor([wrist_position]).view(-1)
+        # print("===", self.obs.shape, self.obs)
         return self.obs
 
     def step(self, action):
@@ -105,7 +105,9 @@ class MyRCareWorldEnv(RCareWorld, gym.Env):
         print(f"comfort level:{comfort_level}")
         # make comfort_level a torch scalar
         comfort_level = torch.tensor(comfort_level)
-        return comfort_level
+        ret = comfort_level.item()
+        assert isinstance(ret, float)
+        return ret
 
     def close(self):
         self.env.close()
